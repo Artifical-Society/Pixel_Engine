@@ -21,7 +21,7 @@ set(librariesList
 )
 
 add_executable(
-        Pixel_Engine src/try.cpp
+        Pixel_Engine src/main.cpp
         src/library_support/Graphic/vulkan/window.hpp
         src/library_support/Graphic/vulkan/window.cpp
         #        src/utility/Non_destructive_data/decimal.cpp
