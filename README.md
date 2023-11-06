@@ -2,7 +2,10 @@
 _A Cross-platform 3D engine with several demos._
 
 ## Table
-
+<!-- TOC -->
+  * [Code Structure](#code-structure)
+  * [Contributor](#contributor)
+<!-- TOC -->
 
 
 ## Code Structure
@@ -13,7 +16,6 @@ _A Cross-platform 3D engine with several demos._
 | vulkan    | [Vulkan API package](./src/library_support/Graphic/vulkan) |
 | to be add | [nothing here]()                                           |
 
-## Contributor
-###### _last update 2023.11.6_
+## Contributor (_last update 2023.11.6_)
 
 [Ruihan Zhao](https://github.com/RuihanRZhao/)
