@@ -1,5 +1,11 @@
-//
-// Created by Ryen Zhao on 07/11/2023.
-//
 
 #include "vulkan_API_test.hpp"
+
+
+namespace graph_vulkan{
+    void vulkan_window_test::run() {
+        while (!window_test.shouldClose()){
+             glfwPollEvents();
+        }
+    }
+}
