@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.26)
 project(Pixel_Engine)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # brew include directory in macOS locally
 ## glfw
@@ -21,13 +22,15 @@ set(librariesList
 )
 
 add_executable(
-        Pixel_Engine src/main.cpp
+        Pixel_Engine
+        # main programme
+        src/main.cpp
+        # library supports
         src/library_support/Graphic/vulkan/window.hpp
         src/library_support/Graphic/vulkan/window.cpp
-        #        src/utility/Non_destructive_data/decimal.cpp
-        #        src/utility/Non_destructive_data/decimal.h
-        #        src/utility/Non_destructive_data/integer.cpp
-        #        src/utility/Non_destructive_data/integer.h
+        # test parts
+        src/test/vulkan_API_test.cpp
+        src/test/vulkan_API_test.hpp
 
 )
 
