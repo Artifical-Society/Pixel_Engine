@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "../library_support/Graphic/vulkan/window.hpp"
+#include "../library_support/Graphic/vulkan/window/window.hpp"
 
 namespace graph_vulkan{
     class vulkan_window_test{
