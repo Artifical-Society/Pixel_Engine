@@ -1,10 +1,4 @@
-/**
- * library_support/Graphic/vulkan/window
- *
- * An API package for window usage based on vulkan and GLFW
- * Author: Ryen (Ruihan Zhao)
- * Create Date: 2023-11-06 14:37:20 UTC +8:00
- **/
+
 #include "window.hpp"
 
 namespace graph_vulkan{

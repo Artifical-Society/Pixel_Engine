@@ -1,8 +1,14 @@
 /**
+ * library_support/Graphic/vulkan/window
+ *
  * An API package for window usage based on vulkan and GLFW
  * Author: Ryen (Ruihan Zhao)
- * Create Date: 2023-11-06 06:37:20 UTC_standard (2023-11-06 14:37:20 UTC +8:00)
+ * Create Date: 2023-11-06 14:37:20 UTC +8:00
+ *
  **/
+
+#ifndef PIXEL_ENGINE_GRAPHIC_VULKAN_WINDOW_H
+#define PIXEL_ENGINE_GRAPHIC_VULKAN_WINDOW_H
 
 #pragma once
 
@@ -26,7 +32,7 @@ namespace graph_vulkan {
         public:
             // Initial function
             Window(int input_width, int input_height, std::string input_window_name);
-            // Destory function
+            // Destroy function
             ~Window();
 
             Window(const Window &) = delete;
@@ -37,3 +43,4 @@ namespace graph_vulkan {
 
     };
 }
+#endif  // PIXEL_ENGINE_GRAPHIC_VULKAN_WINDOW_H

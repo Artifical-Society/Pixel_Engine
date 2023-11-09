@@ -8,6 +8,8 @@
 #pragma once
 
 #include "../library_support/Graphic/vulkan/window/window.hpp"
+#include "../library_support/Graphic/vulkan/pipeline/pipeline.hpp"
+
 
 namespace graph_vulkan{
     class vulkan_window_test{
@@ -19,6 +21,12 @@ namespace graph_vulkan{
 
     private:
         Window window_test{WIDTH_WINDOW,HEIGHT_WINDOW,"Vulkan Window Test"};
+
+        const std:: string path_to_shader_spv = "src/library_support/Graphic/vulkan/shaders/build/";
+        Pipeline pipeline{
+            path_to_shader_spv+"shader_v0_0_0.vert.spv",
+            path_to_shader_spv+"shader_v0_0_0.frag.spv"
+        };
     };
 } // namespace graph_vulkan
 
