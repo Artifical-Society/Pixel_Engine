@@ -50,8 +50,6 @@ set(librariesList
         vulkan
 )
 
-
-
 add_executable(
         Pixel_Engine
         # main programme
