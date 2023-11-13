@@ -42,8 +42,8 @@ namespace graph_vulkan{
         VkQueue graphics_queue_;
         VkQueue present_queue_;
 
-        const std::vector<const char *> validationLayers = {"VK_LAYER_KHRONOS_validation"};
-        const std::vector<const char *> deviceExtensions = {VK_KHR_SWAPCHAIN_EXTENSION_NAME};
+        const std::vector<const char *> validation_layers = {"VK_LAYER_KHRONOS_validation"};
+        const std::vector<const char *> device_extensions = {VK_KHR_SWAPCHAIN_EXTENSION_NAME};
 
         void create_instance(const char* application_name, std::tuple<int, int, int>application_version);
         void setup_debug_messenger();
@@ -57,7 +57,7 @@ namespace graph_vulkan{
         std::vector<const char *> get_required_extensions();
         bool check_validation_layer_support();
         Queue_Family_Indices find_queue_families(VkPhysicalDevice device);
-        void populate_debug_messenger_create_info(VkDebugUtilsMessengerCreateInfoEXT &createInfo);
+        void populate_debug_messenger_create_info(VkDebugUtilsMessengerCreateInfoEXT &create_info);
         void has_GflW_required_instance_extensions();
         bool check_device_extension_support(VkPhysicalDevice device);
         Swap_Chain_Support_Details query_Swap_Chain_Support(VkPhysicalDevice device);
@@ -68,7 +68,9 @@ namespace graph_vulkan{
 #else
         const bool enable_validation_layers = true;
 #endif
-        Device( Window &window, std::string application_name,
+        Device(
+            Window &window,
+            std::string application_name,
             std::tuple<int, int, int> application_version
             );
         ~Device();
@@ -84,8 +86,11 @@ namespace graph_vulkan{
         VkSurfaceKHR surface(){ return surface_; }
         VkQueue graphics_queue(){ return graphics_queue_; }
         VkQueue present_queue(){ return present_queue_; }
-        Swap_Chain_Support_Details get_Swap_Chain_Support(){ return query_Swap_Chain_Support(physical_device); }
 
+        Swap_Chain_Support_Details get_Swap_Chain_Support(){ return query_Swap_Chain_Support(physical_device); }
+        uint32_t find_Memory_type(uint32_t type_filter, VkMemoryPropertyFlags properties);
+
+        Queue_Family_Indices find_physical_queue_families(){  return find_queue_families(physical_device); }
 
         VkFormat find_supported_format(
                 const std::vector<VkFormat> &candidates,
@@ -120,12 +125,10 @@ namespace graph_vulkan{
                 const VkImageCreateInfo &image_info,
                 VkMemoryPropertyFlags properties,
                 VkImage &image,
-                VkDeviceMemory &image_memory,
+                VkDeviceMemory &image_memory
                 );
 
-        VkPhysicalDeviceProperties properties;
-
-
+        VkPhysicalDeviceProperties properties{};
     };
 
 } // namespace graph_vulkan
