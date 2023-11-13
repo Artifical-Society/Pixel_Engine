@@ -24,8 +24,8 @@ namespace graph_vulkan{
 
         const std:: string path_to_shader_spv = "src/library_support/Graphic/vulkan/shaders/build/";
         Pipeline pipeline{
-            path_to_shader_spv+"shader_v0_0_0.vert.spv",
-            path_to_shader_spv+"shader_v0_0_0.frag.spv"
+            path_to_shader_spv + "shader_v0_0_0.vert.spv",
+            path_to_shader_spv + "shader_v0_0_0.frag.spv"
         };
     };
 } // namespace graph_vulkan
