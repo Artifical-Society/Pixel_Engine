@@ -46,8 +46,9 @@ message(STATUS "copy shader - output: ${copy_output}")
 message(STATUS "copy shader -  error: ${copy_error}")
 
 set(librariesList
-        GLFW
         vulkan
+        GLFW
+        GLM
 )
 
 add_executable(
@@ -67,6 +68,8 @@ add_executable(
 
         # resources
         ${Shader_Copy}
+        src/library_support/Graphic/vulkan/device/device.hpp
+        src/library_support/Graphic/vulkan/device/device.cpp
 
 )
 
