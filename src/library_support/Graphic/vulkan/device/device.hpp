@@ -88,7 +88,8 @@ namespace graph_vulkan{
         VkQueue present_queue(){ return present_queue_; }
 
         Swap_Chain_Support_Details get_Swap_Chain_Support(){ return query_Swap_Chain_Support(physical_device); }
-        uint32_t find_Memory_type(uint32_t type_filter, VkMemoryPropertyFlags properties);
+
+        uint32_t find_Memory_type(uint32_t type_filter, VkMemoryPropertyFlags property_flags);
 
         Queue_Family_Indices find_physical_queue_families(){  return find_queue_families(physical_device); }
 
@@ -102,7 +103,7 @@ namespace graph_vulkan{
         void create_buffer(
                 VkDeviceSize size,
                 VkBufferUsageFlags usage,
-                VkMemoryPropertyFlags properties,
+                VkMemoryPropertyFlags property_flags,
                 VkBuffer &buffer,
                 VkDeviceMemory &buffer_memory
                 );

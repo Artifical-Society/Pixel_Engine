@@ -360,4 +360,107 @@ namespace graph_vulkan{
         }
         return indices;
     }
+
+    Swap_Chain_Support_Details Device::query_Swap_Chain_Support(VkPhysicalDevice device) {
+        Swap_Chain_Support_Details details;
+        vkGetPhysicalDeviceSurfaceCapabilitiesKHR(
+                device,
+                surface_,
+                &details.capabilities
+                );
+
+        uint32_t format_count;
+        vkGetPhysicalDeviceSurfaceFormatsKHR(
+                device,
+                surface_,
+                &format_count,
+                nullptr
+                );
+
+        if (format_count != 0) {
+            details.formats.resize(format_count);
+            vkGetPhysicalDeviceSurfaceFormatsKHR(
+                    device,
+                    surface_,
+                    &format_count,
+                    details.formats.data()
+                    );
+        }
+
+        uint32_t present_mode_count;
+        vkGetPhysicalDeviceSurfacePresentModesKHR(device, surface_, &present_mode_count, nullptr);
+
+        if(present_mode_count != 0){
+            details.presentModes.resize(present_mode_count);
+            vkGetPhysicalDeviceSurfacePresentModesKHR(
+                    device,
+                    surface_,
+                    &present_mode_count,
+                    details.presentModes.data()
+                    );
+        }
+        return details;
+    }
+
+    VkFormat Device::find_supported_format(
+            const std::vector<VkFormat> &candidates,
+            VkImageTiling tiling,
+            VkFormatFeatureFlags features) {
+        for (VkFormat format : candidates) {
+            VkFormatProperties props;
+            vkGetPhysicalDeviceFormatProperties(physical_device, format, &props);
+
+            if (tiling == VK_IMAGE_TILING_LINEAR && (props.linearTilingFeatures & features) == features){
+                return format;
+            } else if (
+                    tiling == VK_IMAGE_TILING_OPTIMAL && (props.optimalTilingFeatures & features) == features) {
+                return format;
+            } else {
+                continue;
+            }
+        }
+        throw std::runtime_error("failed to find supported format!");
+    }
+
+    uint32_t Device::find_Memory_type(uint32_t type_filter, VkMemoryPropertyFlags property_flags) {
+        VkPhysicalDeviceMemoryProperties memory_properties;
+        vkGetPhysicalDeviceMemoryProperties(physical_device, &memory_properties);
+        for (uint32_t i = 0; i < memory_properties.memoryTypeCount; i++) {
+            if ((type_filter & (1 << i)) &&
+                (memory_properties.memoryTypes[i].propertyFlags & property_flags) == property_flags) {
+                return i;
+            }
+        }
+
+        throw std::runtime_error("failed to find suitable memory type!");
+    }
+
+    void Device::create_buffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags property_flags,
+                               VkBuffer &buffer, VkDeviceMemory &buffer_memory) {
+            VkBufferCreateInfo bufferInfo{};
+            bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+            bufferInfo.size = size;
+            bufferInfo.usage = usage;
+            bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+
+            if (vkCreateBuffer(device_, &bufferInfo, nullptr, &buffer) != VK_SUCCESS) {
+                throw std::runtime_error("Failed to create vertex buffer!");
+            }
+
+            VkMemoryRequirements memory_requirements;
+            vkGetBufferMemoryRequirements(device_, buffer, &memory_requirements);
+
+            VkMemoryAllocateInfo allocInfo{};
+            allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+            allocInfo.allocationSize = memory_requirements.size;
+            allocInfo.memoryTypeIndex = find_Memory_type(memory_requirements.memoryTypeBits, property_flags);
+
+            if (vkAllocateMemory(device_, &allocInfo, nullptr, &buffer_memory) != VK_SUCCESS) {
+                throw std::runtime_error("Failed to allocate vertex buffer memory!");
+            }
+
+            vkBindBufferMemory(device_, buffer, buffer_memory, 0);
+    }
+
+
 }
