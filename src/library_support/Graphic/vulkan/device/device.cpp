@@ -463,5 +463,59 @@ namespace graph_vulkan{
             vkBindBufferMemory(device_, buffer, buffer_memory, 0);
     }
 
+    VkCommandBuffer Device::begin_single_time_commands(){
+        VkCommandBufferAllocateInfo allocate_info{};
+        allocate_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+        allocate_info.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
+        allocate_info.commandPool = command_pool;
+        allocate_info.commandBufferCount = 1;
 
-}
+        VkCommandBuffer command_buffer;
+        vkAllocateCommandBuffers(device_, &allocate_info, &command_buffer);
+
+        VkCommandBufferBeginInfo begin_info{};
+        begin_info.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+        begin_info.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+
+        vkBeginCommandBuffer(command_buffer, &begin_info);
+        return command_buffer;
+    }
+
+    void Device::end_single_time_commands(VkCommandBuffer command_buffer){
+        vkEndCommandBuffer(command_buffer);
+
+        VkSubmitInfo submit_info{};
+        submit_info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+        submit_info.commandBufferCount = 1;
+        submit_info.pCommandBuffers = &command_buffer;
+
+        vkQueueSubmit(graphics_queue_, 1, &submit_info, VK_NULL_HANDLE);
+        vkQueueWaitIdle(graphics_queue_);
+
+        vkFreeCommandBuffers(device_, command_pool, 1, &command_buffer);
+    }
+
+    void Device::copy_buffer(
+            VkBuffer src_buffer,
+            VkBuffer dst_buffer,
+            VkDeviceSize size ){
+
+    }
+
+    void Device::copy_buffer_to_image(
+            VkBuffer buffer,
+            VkImage image,
+            uint32_t width,
+            uint32_t height,
+            uint32_t layerCount ){
+
+    }
+
+    void Device::create_image_with_info(
+            const VkImageCreateInfo &image_info,
+            VkMemoryPropertyFlags properties,
+            VkImage &image,
+            VkDeviceMemory &image_memory ){
+
+    }
+} // namespace graph_vulkan
