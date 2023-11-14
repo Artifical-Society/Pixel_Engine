@@ -499,7 +499,15 @@ namespace graph_vulkan{
             VkBuffer src_buffer,
             VkBuffer dst_buffer,
             VkDeviceSize size ){
+        VkCommandBuffer command_buffer = begin_single_time_commands();
 
+        VkBufferCopy copy_region{};
+        copy_region.srcOffset = 0;
+        copy_region.dstOffset = 0;
+        copy_region.size = size;
+        vkCmdCopyBuffer(command_buffer, src_buffer, dst_buffer, 1, &copy_region);
+
+        end_single_time_commands(command_buffer);
     }
 
     void Device::copy_buffer_to_image(
