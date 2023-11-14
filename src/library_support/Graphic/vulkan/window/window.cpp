@@ -27,7 +27,14 @@ namespace graph_vulkan{
                 );
     }
 
-    bool Window::shouldClose() {
+    bool Window::should_close() {
         return glfwWindowShouldClose(window);
     }
+
+    void Window::create_window_surface(VkInstance instance, VkSurfaceKHR *surface){
+        if (glfwCreateWindowSurface(instance, window, nullptr, surface) != VK_SUCCESS){
+            throw std::runtime_error("Failed to create window surface.");
+        }
+    }
+
 }

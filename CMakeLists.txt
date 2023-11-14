@@ -10,6 +10,12 @@ include_directories(/opt/homebrew/include ./include)
 ## glfw library directory in macOS locally
 link_directories(/opt/homebrew/Cellar/glfw/3.3.8/lib)
 
+## glm
+include_directories(/opt/homebrew/include ./include)
+## glm library directory in macOS locally
+link_directories(/opt/homebrew/Cellar/glm/0.9.9.8/lib)
+
+
 # VulkanSDK
 ## Vulkan include directory in macOS locally
 include_directories(/Users/ryen/Code/Library/VulkanSDK/1.3.268.1/macOS/include)
@@ -46,11 +52,9 @@ message(STATUS "copy shader - output: ${copy_output}")
 message(STATUS "copy shader -  error: ${copy_error}")
 
 set(librariesList
-        GLFW
         vulkan
+        GLFW
 )
-
-
 
 add_executable(
         Pixel_Engine
@@ -69,6 +73,8 @@ add_executable(
 
         # resources
         ${Shader_Copy}
+        src/library_support/Graphic/vulkan/device/device.hpp
+        src/library_support/Graphic/vulkan/device/device.cpp
 
 )
 

@@ -12,9 +12,10 @@
 
 #pragma once
 
+#define GLFW_INCLUDE_VULKAN
+
 #include <string>
 #include <GLFW/glfw3.h>
-#define GLFW_INCLUDE_VULKAN
 
 namespace graph_vulkan {
     class Window {
@@ -39,7 +40,9 @@ namespace graph_vulkan {
             Window &operator = (const Window &) = delete;
 
             // Listener to determine if the instance has been closed
-            bool shouldClose();
+            bool should_close();
+
+            void create_window_surface(VkInstance instance, VkSurfaceKHR *surface);
 
     };
 }
