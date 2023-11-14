@@ -13,10 +13,18 @@
 #include <filesystem>
 
 namespace graph_vulkan{
-    Pipeline::Pipeline(const std::string& vert_path, const std::string& frag_path){
-        create_graphics_pipeline(vert_path, frag_path);
+    Pipeline::Pipeline(
+            Device& device,
+            const std::string& vert_path,
+            const std::string& frag_path,
+            const Pipeline_config_info& config_info) : pipeline_device(device) {
+        create_graphics_pipeline(vert_path, frag_path, config_info);
     }
-
+    Pipeline::~Pipeline() {
+        vkDestroyShaderModule(pipeline_device.device(), vert_shader_module, nullptr);
+        vkDestroyShaderModule(pipeline_device.device(), frag_shader_module, nullptr);
+        vkDestroyPipeline(pipeline_device.device(), graphics_pipeline, nullptr);
+    }
 
     std::vector<char> Pipeline::read_file(const std::string& target_file_path){
         std::ifstream target_file{
@@ -51,7 +59,8 @@ namespace graph_vulkan{
     }
     void Pipeline::create_graphics_pipeline(
             const std::string& vert_path,
-            const std::string& frag_path
+            const std::string& frag_path,
+            const Pipeline_config_info& config_info
             ){
         auto vert_code = read_file(vert_path);
         auto frag_code = read_file(frag_path);
@@ -61,4 +70,23 @@ namespace graph_vulkan{
         std::cout << "Vertex Shader Code Size: " << vert_code.size() <<std::endl;
         std::cout << "Fragment Shader Code Size: " << frag_code.size() << std::endl;
     }
+
+    void Pipeline::create_shader_module(const std::vector<char> &code, VkShaderModule *shader_module) {
+        VkShaderModuleCreateInfo create_info{};
+        create_info.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+        create_info.codeSize = code.size();
+        create_info.pCode = reinterpret_cast<const uint32_t*>(code.data());
+
+        if (vkCreateShaderModule(pipeline_device.device(), &create_info, nullptr,shader_module) != VK_SUCCESS){
+            throw std::runtime_error("Failed to create shader module.");
+        }
+    }
+
+    Pipeline_config_info Pipeline::default_Pipeline_config_info(uint32_t width, uint32_t height) {
+        Pipeline_config_info config_info{};
+
+        return config_info;
+    }
+
+
 }

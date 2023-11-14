@@ -152,7 +152,7 @@ namespace graph_vulkan{
 
         vkGetPhysicalDeviceProperties(physical_device, &properties);
 
-        std::cout << "Physical device: " << properties.deviceName << std::endl;
+        std::cout << "Physical pipeline_device: " << properties.deviceName << std::endl;
     }
 
     void Device::create_logical_device() {
@@ -195,7 +195,7 @@ namespace graph_vulkan{
         }
 
         if(vkCreateDevice(physical_device, &create_info, nullptr, &device_) != VK_SUCCESS){
-            throw std::runtime_error("Failed to create logical device.");
+            throw std::runtime_error("Failed to create logical pipeline_device.");
         }
 
         vkGetDeviceQueue(device_, indices.graphics_Family, 0, &graphics_queue_);

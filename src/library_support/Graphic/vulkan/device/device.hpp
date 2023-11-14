@@ -2,8 +2,8 @@
 // Created by Ryen Zhao on 13/11/2023.
 //
 
-#ifndef PIXEL_ENGINE_DEVICE_HPP
-#define PIXEL_ENGINE_DEVICE_HPP
+#ifndef PIXEL_ENGINE_GRAPHIC_VULKAN_DEVICE_HPP
+#define PIXEL_ENGINE_GRAPHIC_VULKAN_DEVICE_HPP
 
 #pragma once
 
@@ -136,4 +136,4 @@ namespace graph_vulkan{
 
 
 
-#endif //PIXEL_ENGINE_DEVICE_HPP
+#endif //PIXEL_ENGINE_GRAPHIC_VULKAN_DEVICE_HPP
