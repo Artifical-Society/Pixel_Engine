@@ -124,7 +124,7 @@ namespace graph_vulkan{
                 );
         void create_image_with_info(
                 const VkImageCreateInfo &image_info,
-                VkMemoryPropertyFlags properties,
+                VkMemoryPropertyFlags property_flags,
                 VkImage &image,
                 VkDeviceMemory &image_memory
                 );

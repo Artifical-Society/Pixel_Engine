@@ -543,9 +543,27 @@ namespace graph_vulkan{
 
     void Device::create_image_with_info(
             const VkImageCreateInfo &image_info,
-            VkMemoryPropertyFlags properties,
+            VkMemoryPropertyFlags property_flags,
             VkImage &image,
             VkDeviceMemory &image_memory ){
+        if (vkCreateImage(device_, &image_info, nullptr, &image) != VK_SUCCESS) {
+            throw std::runtime_error("failed to create image!");
+        }
 
+        VkMemoryRequirements memory_requirements;
+        vkGetImageMemoryRequirements(device_, image, &memory_requirements);
+
+        VkMemoryAllocateInfo allocInfo{};
+        allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+        allocInfo.allocationSize = memory_requirements.size;
+        allocInfo.memoryTypeIndex = find_Memory_type(memory_requirements.memoryTypeBits, property_flags);
+
+        if (vkAllocateMemory(device_, &allocInfo, nullptr, &image_memory) != VK_SUCCESS) {
+            throw std::runtime_error("failed to allocate image memory!");
+        }
+
+        if (vkBindImageMemory(device_, image, image_memory, 0) != VK_SUCCESS) {
+            throw std::runtime_error("failed to bind image memory!");
+        }
     }
 } // namespace graph_vulkan
