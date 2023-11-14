@@ -435,7 +435,8 @@ namespace graph_vulkan{
         throw std::runtime_error("failed to find suitable memory type!");
     }
 
-    void Device::create_buffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags property_flags,
+    void Device::create_buffer(VkDeviceSize size, VkBufferUsageFlags usage,
+                               VkMemoryPropertyFlags property_flags,
                                VkBuffer &buffer, VkDeviceMemory &buffer_memory) {
             VkBufferCreateInfo bufferInfo{};
             bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
