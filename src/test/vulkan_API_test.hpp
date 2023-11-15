@@ -26,7 +26,8 @@ namespace graph_vulkan{
         Window window_test{WIDTH_WINDOW,HEIGHT_WINDOW,"Vulkan Window Test"};
 
         // Device
-        Device device_test{window_test, "vulkan_test_device", std::tuple<int, int, int>(1,0,0)};
+//        Device device_test{window_test, "vulkan_test_device", std::tuple<int, int, int>(1,0,0)};
+        Device device_test{window_test};
 
         // Pipeline
         const std::string path_to_shader_spv = "src/library_support/Graphic/vulkan/shaders/build/";
