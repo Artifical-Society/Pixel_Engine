@@ -17,7 +17,20 @@
 #include "../device/device.hpp"
 
 namespace graph_vulkan{
-    struct Pipeline_config_info{};
+    struct Pipeline_config_info{
+        VkViewport viewport;
+        VkRect2D scissor;
+        VkPipelineViewportStateCreateInfo viewport_info;
+        VkPipelineInputAssemblyStateCreateInfo input_assembly_info;
+        VkPipelineRasterizationStateCreateInfo rasterization_info;
+        VkPipelineMultisampleStateCreateInfo multi_sample_info;
+        VkPipelineColorBlendAttachmentState color_blend_attachment;
+        VkPipelineColorBlendStateCreateInfo color_blend_info;
+        VkPipelineDepthStencilStateCreateInfo depth_stencil_info;
+        VkPipelineLayout pipeline_layout = nullptr;
+        VkRenderPass render_pass = nullptr;
+        uint32_t sub_pass = 0;
+    };
 
     class Pipeline {
         private:
